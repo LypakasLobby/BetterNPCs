@@ -46,10 +46,11 @@ public class DialogueRegistry {
 
                     String buttonID = buttonEntry.getKey();
                     List<String> buttonCommands = BetterNPCs.npcConfigManager.getConfigNode(i, "Messages", dialogueID, "Buttons", buttonID, "Commands").getList(TypeToken.of(String.class));
+                    int buttonCost = BetterNPCs.npcConfigManager.getConfigNode(i, "Messages", dialogueID, "Buttons", buttonID, "Cost").getInt();
                     List<String> buttonPermissions = BetterNPCs.npcConfigManager.getConfigNode(i, "Messages", dialogueID, "Buttons", buttonID, "Permissions").getList(TypeToken.of(String.class));
                     String buttonText = BetterNPCs.npcConfigManager.getConfigNode(i, "Messages", dialogueID, "Buttons", buttonID, "Text").getString();
                     int buttonWeight = BetterNPCs.npcConfigManager.getConfigNode(i, "Messages", dialogueID, "Buttons", buttonID, "Weight").getInt();
-                    ButtonOption buttonOption = new ButtonOption(buttonID, buttonCommands, buttonPermissions, buttonText, buttonWeight);
+                    ButtonOption buttonOption = new ButtonOption(buttonID, buttonCommands, buttonCost, buttonPermissions, buttonText, buttonWeight);
                     options.add(buttonOption);
                     buttonOptionCount++;
 

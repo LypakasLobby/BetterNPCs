@@ -3,6 +3,7 @@ package com.lypaka.betternpcs.Dialogue;
 import com.google.common.collect.Lists;
 import com.lypaka.betternpcs.API.DialogueOpenEvent;
 import com.lypaka.lypakautils.FancyText;
+import com.lypaka.lypakautils.MiscHandlers.LogicalPixelmonMoneyHandler;
 import com.lypaka.lypakautils.MiscHandlers.PermissionHandler;
 import com.pixelmonmod.pixelmon.api.dialogue.Choice;
 import com.pixelmonmod.pixelmon.api.dialogue.Dialogue;
@@ -104,6 +105,16 @@ public class DialogueBuilder {
                                 break;
 
                             }
+                            if (option.getCost() > 0) {
+
+                                if (LogicalPixelmonMoneyHandler.getBalance(player.getUniqueID()) < option.getCost()) {
+
+                                    add = false;
+                                    break;
+
+                                }
+
+                            }
 
                         }
 
@@ -139,6 +150,11 @@ public class DialogueBuilder {
 
                 player.getServer().deferTask(() -> {
 
+                    if (button.getCost() > 0) {
+
+                        LogicalPixelmonMoneyHandler.remove(player.getUniqueID(), button.getCost());
+
+                    }
                     for (String c : button.getCommands()) {
 
                         player.getServer().getCommandManager().handleCommand(
